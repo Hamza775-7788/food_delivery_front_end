@@ -6,7 +6,8 @@ class AppImage {
   static String onBordingImage = "$_image/onBordingView.png";
 }
 
-
-class AppIcons{
-  
+class AppIcons {
+  static String googleIcon = "$_icon/google_icon.png";
+  static String fBookIcon = "$_icon/f_book_icon.png";
+  static String applIcon = "$_icon/appl_icon.png";
 }
