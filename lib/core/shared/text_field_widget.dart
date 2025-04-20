@@ -2,18 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_front_end/core/theme/text_styles.dart';
 import 'package:get/get.dart';
 
-class MyTextField extends StatelessWidget {
+class MyTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hint;
-  const MyTextField({required this.controller, required this.hint, super.key});
+  final bool isPassowrd;
+  const MyTextField({
+    this.isPassowrd = false,
+    required this.controller,
+    required this.hint,
+    super.key,
+  });
 
+  @override
+  State<MyTextField> createState() => _MyTextFieldState();
+}
+
+class _MyTextFieldState extends State<MyTextField> {
+  bool showPassword = true;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      obscureText: widget.isPassowrd ? showPassword : false,
+
       style: AppStyles.normalStyleTitle(),
       decoration: InputDecoration(
+        suffixIcon:
+            widget.isPassowrd
+                ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      showPassword = !showPassword;
+                    });
+                  },
+                  icon:
+                      showPassword
+                          ? Icon(Icons.visibility_off_outlined)
+                          : Icon(Icons.remove_red_eye_outlined),
+                )
+                : null,
+
         hintStyle: AppStyles.subTitle(),
-        hintText: hint,
+        hintText: widget.hint,
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -33,8 +62,10 @@ class MyTextFieldWithLable extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final String lable;
+  final bool isPassowrd;
   const MyTextFieldWithLable({
     super.key,
+    this.isPassowrd = false,
     required this.controller,
     required this.hint,
     required this.lable,
@@ -47,7 +78,7 @@ class MyTextFieldWithLable extends StatelessWidget {
       children: [
         Text(lable, style: AppStyles.normalStyleTitle()),
         SizedBox(height: 10),
-        MyTextField(controller: controller, hint: hint),
+        MyTextField(isPassowrd: isPassowrd, controller: controller, hint: hint),
       ],
     );
   }
