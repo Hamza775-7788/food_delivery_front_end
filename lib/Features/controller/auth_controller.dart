@@ -1,6 +1,8 @@
-import 'dart:convert';
-
-import 'package:food_delivery_front_end/core/Server/root_link.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:food_delivery_front_end/Features/repository/auth_repository.dart';
+import 'package:food_delivery_front_end/core/erorrs/handle_message.dart';
+import 'package:food_delivery_front_end/core/shared/dialogs.dart';
 import 'package:get/get.dart';
 
 abstract class AuthController extends GetxController {
@@ -11,17 +13,27 @@ abstract class AuthController extends GetxController {
     required String userName,
   });
   Future<void> forgotePassowrd({required String email});
-  Future<void> verifiyCode({required String email, required String passowrd});
+  Future<void> verifiyCode({required String email, required String code});
   Future<void> restPassowrd({required String email, required String passowrd});
 }
 
 class AuthControllerImpl extends AuthController {
-  final GetConnect _getConnect = GetConnect();
-  
+  AuthRepositoryImpl _authRepositoryImpl = AuthRepositoryImpl();
+
   @override
   Future<void> forgotePassowrd({required String email}) async {
-    // TODO: implement forgotePassowrd
-    throw UnimplementedError();
+    final request = await _authRepositoryImpl.forgotePassowrd(email: email);
+
+    request.fold(
+      (failure) {
+        // handle erorr
+        handleErorr(failure);
+      },
+      (_) {
+        // handle sauccess
+        handleSuccess();
+      },
+    );
   }
 
   @override
@@ -29,14 +41,34 @@ class AuthControllerImpl extends AuthController {
     required String email,
     required String passowrd,
   }) async {
-    // TODO: implement restPassowrd
-    throw UnimplementedError();
+    final request = await _authRepositoryImpl.restPassowrd(
+      email: email,
+      passowrd: passowrd,
+    );
+    request.fold(
+      (failure) {
+        handleErorr(failure);
+      },
+      (_) {
+        handleSuccess();
+      },
+    );
   }
 
   @override
   Future<void> signIn({required String email, required String passowrd}) async {
-    // TODO: implement signIn
-    throw UnimplementedError();
+    final request = await _authRepositoryImpl.signIn(
+      email: email,
+      passowrd: passowrd,
+    );
+    request.fold(
+      (failure) {
+        handleErorr(failure);
+      },
+      (_) {
+        handleSuccess();
+      },
+    );
   }
 
   @override
@@ -45,35 +77,40 @@ class AuthControllerImpl extends AuthController {
     required String passowrd,
     required String userName,
   }) async {
-    final body = {"name": userName, "email": email, "password": passowrd};
-    var headersList = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-    print("$rootApi/signUp");
-    final response = await _getConnect.post(
-      "$rootApi/signUp",
-      jsonEncode(body),
-      headers: headersList,
-    );
+    lodingDialog();
 
-    if (response.statusCode == 200) {
-      final jsondata = response.body;
-      if (jsondata['status']) {
-        print(jsondata['user']);
-        print(jsondata['token']);
-      }
-    } else {
-      Get.snackbar("خطاء", "خطاء في الاتصال بالسرفر");
-    }
+    final request = await _authRepositoryImpl.signUp(
+      email: email,
+      passowrd: passowrd,
+      userName: userName,
+    );
+    Get.back();
+    request.fold(
+      (failure) {
+        handleErorr(failure);
+      },
+      (_) {
+        handleSuccess();
+      },
+    );
   }
 
   @override
   Future<void> verifiyCode({
     required String email,
-    required String passowrd,
+    required String code,
   }) async {
-    // TODO: implement verifiyCode
-    throw UnimplementedError();
+    final request = await _authRepositoryImpl.verifiyCode(
+      email: email,
+      code: code,
+    );
+    request.fold(
+      (failure) {
+        handleErorr(failure);
+      },
+      (_) {
+        handleSuccess();
+      },
+    );
   }
 }
