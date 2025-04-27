@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_front_end/Features/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
 class SignupViewModel {
@@ -15,14 +16,27 @@ class SignupViewModel {
   String iAgreeLable = "I agree to the terms and conditions";
 
   bool iAgree = false;
-
+  AuthControllerImpl _controllerImpl = Get.put(AuthControllerImpl());
   String regestrButtonLable = "Register";
   String signInLable = "Sign In";
   String readyToSignInLable = "Already have an account?";
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController userNameController;
-  onSignUp() {}
+  onSignUp() {
+    if (emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        userNameController.text.isEmpty) {
+      Get.snackbar("", "يجب ادخال جميع البينات");
+    } else {
+      _controllerImpl.signUp(
+        email: emailController.text,
+        passowrd: passwordController.text,
+        userName: userNameController.text,
+      );
+    }
+  }
+
   onSignIn() {
     Get.back();
   }

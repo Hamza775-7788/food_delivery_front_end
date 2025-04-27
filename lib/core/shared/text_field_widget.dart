@@ -23,7 +23,7 @@ class _MyTextFieldState extends State<MyTextField> {
   Widget build(BuildContext context) {
     return TextField(
       obscureText: widget.isPassowrd ? showPassword : false,
-
+      controller: widget.controller,
       style: AppStyles.normalStyleTitle(),
       decoration: InputDecoration(
         suffixIcon:
@@ -58,7 +58,7 @@ class _MyTextFieldState extends State<MyTextField> {
   }
 }
 
-class MyTextFieldWithLable extends StatelessWidget {
+class MyTextFieldWithLable extends StatefulWidget {
   final TextEditingController controller;
   final String hint;
   final String lable;
@@ -72,13 +72,22 @@ class MyTextFieldWithLable extends StatelessWidget {
   });
 
   @override
+  State<MyTextFieldWithLable> createState() => _MyTextFieldWithLableState();
+}
+
+class _MyTextFieldWithLableState extends State<MyTextFieldWithLable> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(lable, style: AppStyles.normalStyleTitle()),
+        Text(widget.lable, style: AppStyles.normalStyleTitle()),
         SizedBox(height: 10),
-        MyTextField(isPassowrd: isPassowrd, controller: controller, hint: hint),
+        MyTextField(
+          isPassowrd: widget.isPassowrd,
+          controller: widget.controller,
+          hint: widget.hint,
+        ),
       ],
     );
   }
