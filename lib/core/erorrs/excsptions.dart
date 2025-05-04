@@ -1,0 +1,1 @@
+class EmptyCashdDataSourceExceptions implements Exception {}

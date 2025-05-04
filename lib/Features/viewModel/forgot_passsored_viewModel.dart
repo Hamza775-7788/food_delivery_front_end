@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_front_end/Features/view/emial_verifiyCodeViewPage.dart';
+import 'package:food_delivery_front_end/Features/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ForgotPasssoredViewmodel {
@@ -11,12 +11,11 @@ class ForgotPasssoredViewmodel {
   String emailHint = "Albertstevano@gmail.com";
   String forgotButtonLable = "Continue";
   late TextEditingController emailController;
-
+  AuthControllerImpl _controllerImpl = Get.put(AuthControllerImpl());
   onForgot() {
-    Get.to(
-      () => EmialVerifiycodeviewpage(email: emailController.text),
-      transition: Transition.rightToLeft,
-      duration: const Duration(milliseconds: 500),
-    );
+    if (emailController.text.isEmpty) {
+    } else {
+      _controllerImpl.forgotePassowrd(email: emailController.text);
+    }
   }
 }

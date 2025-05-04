@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery_front_end/Features/home_view.dart';
 import 'package:food_delivery_front_end/Features/repository/auth_repository.dart';
+import 'package:food_delivery_front_end/Features/view/emial_verifiyCodeViewPage.dart';
 import 'package:food_delivery_front_end/core/erorrs/handle_message.dart';
 import 'package:food_delivery_front_end/core/shared/dialogs.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ abstract class AuthController extends GetxController {
   Future<void> forgotePassowrd({required String email});
   Future<void> verifiyCode({required String email, required String code});
   Future<void> restPassowrd({required String email, required String passowrd});
+  Future<void> getData();
 }
 
 class AuthControllerImpl extends AuthController {
@@ -22,18 +24,27 @@ class AuthControllerImpl extends AuthController {
 
   @override
   Future<void> forgotePassowrd({required String email}) async {
-    final request = await _authRepositoryImpl.forgotePassowrd(email: email);
+    try {
+      lodingDialog();
+      final request = await _authRepositoryImpl.forgotePassowrd(email: email);
+      Get.back();
 
-    request.fold(
-      (failure) {
-        // handle erorr
-        handleErorr(failure);
-      },
-      (_) {
-        // handle sauccess
-        handleSuccess();
-      },
-    );
+      request.fold(
+        (failure) {
+          // handle erorr
+          handleErorr(failure);
+        },
+        (_) {
+          Get.to(
+            () => EmialVerifiycodeviewpage(email: email),
+            transition: Transition.rightToLeft,
+            duration: const Duration(milliseconds: 500),
+          );
+        },
+      );
+    } catch (e) {
+      Get.back();
+    }
   }
 
   @override
@@ -41,34 +52,48 @@ class AuthControllerImpl extends AuthController {
     required String email,
     required String passowrd,
   }) async {
-    final request = await _authRepositoryImpl.restPassowrd(
-      email: email,
-      passowrd: passowrd,
-    );
-    request.fold(
-      (failure) {
-        handleErorr(failure);
-      },
-      (_) {
-        handleSuccess();
-      },
-    );
+    try {
+      lodingDialog();
+      final request = await _authRepositoryImpl.restPassowrd(
+        email: email,
+        passowrd: passowrd,
+      );
+      Get.back();
+
+      request.fold(
+        (failure) {
+          handleErorr(failure);
+        },
+        (_) {
+          handleSuccess();
+        },
+      );
+    } catch (e) {
+      Get.back();
+    }
   }
 
   @override
   Future<void> signIn({required String email, required String passowrd}) async {
-    final request = await _authRepositoryImpl.signIn(
-      email: email,
-      passowrd: passowrd,
-    );
-    request.fold(
-      (failure) {
-        handleErorr(failure);
-      },
-      (_) {
-        handleSuccess();
-      },
-    );
+    try {
+      lodingDialog();
+      final request = await _authRepositoryImpl.signIn(
+        email: email,
+        passowrd: passowrd,
+      );
+      Get.back();
+      request.fold(
+        (failure) {
+          handleErorr(failure);
+        },
+        (_) {
+          Get.offAll(() => HomeView());
+          handleSuccess();
+        },
+      );
+    } catch (e) {
+      Get.back();
+    }
   }
 
   @override
@@ -90,6 +115,7 @@ class AuthControllerImpl extends AuthController {
         handleErorr(failure);
       },
       (_) {
+        Get.to(() => HomeView());
         handleSuccess();
       },
     );
@@ -100,17 +126,37 @@ class AuthControllerImpl extends AuthController {
     required String email,
     required String code,
   }) async {
-    final request = await _authRepositoryImpl.verifiyCode(
-      email: email,
-      code: code,
-    );
-    request.fold(
-      (failure) {
-        handleErorr(failure);
-      },
-      (_) {
-        handleSuccess();
-      },
-    );
+    try {
+      lodingDialog();
+      final request = await _authRepositoryImpl.verifiyCode(
+        email: email,
+        code: code,
+      );
+      Get.back();
+      request.fold(
+        (failure) {
+          handleErorr(failure);
+        },
+        (_) {
+          handleSuccess();
+        },
+      );
+    } catch (e) {
+      Get.back();
+    }
+  }
+
+  @override
+  void onInit() {
+    getData();
+    super.onInit();
+  }
+
+  @override
+  Future<void> getData() async {
+    final requset = await _authRepositoryImpl.getUserData();
+    requset.fold((failure) {}, (e) {
+      Get.to(() => HomeView());
+    });
   }
 }

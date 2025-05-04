@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_front_end/Features/controller/auth_controller.dart';
+import 'package:get/get.dart';
 
 class EmailVerficationCodeViewmodel {
   final String email;
@@ -12,6 +14,14 @@ class EmailVerficationCodeViewmodel {
   String resendCodeLable = "Resend code";
   String verifyButtonLable = "Verify";
   late TextEditingController codeController;
-  onVerify() {}
+
+  AuthControllerImpl _controllerImpl = Get.put(AuthControllerImpl());
+  onVerify() {
+    if (codeController.text.isEmpty) {
+    } else {
+      _controllerImpl.verifiyCode(email: email, code: codeController.text);
+    }
+  }
+
   onResend() {}
 }

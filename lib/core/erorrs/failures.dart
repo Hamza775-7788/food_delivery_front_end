@@ -49,3 +49,15 @@ class InvalidCodeFailure extends Failure {
   // TODO: implement props
   List<Object?> get props => [];
 }
+
+class EmptyCashdDataSourceFailure extends Failure {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
+class UnauthenticatedFailure extends Failure {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery_front_end/Features/controller/auth_controller.dart';
 import 'package:food_delivery_front_end/Features/view/forgote_passowrd_view_page.dart';
 import 'package:food_delivery_front_end/Features/view/sign_up_viewPage.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,16 @@ class SignInViewmodel {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
-  onSignIn() {}
+  AuthControllerImpl _controllerImpl = Get.put(AuthControllerImpl());
+  onSignIn() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+    } else {
+      await _controllerImpl.signIn(
+        email: emailController.text,
+        passowrd: passwordController.text,
+      );
+    }
+  }
 
   onForgot() {
     // Navigate to forgot password page

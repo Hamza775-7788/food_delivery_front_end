@@ -36,7 +36,7 @@ String _failureToString(Failure failure) {
     case InvalidCodeFailure():
       return MessageErorrString.invalidCode;
     case InvalidEmailFailure():
-      return MessageErorrString.invalidCode;
+      return MessageErorrString.invalidEmail;
     case EmailExistsFailure():
       return MessageErorrString.emailExists;
     case OprtingFailure():
