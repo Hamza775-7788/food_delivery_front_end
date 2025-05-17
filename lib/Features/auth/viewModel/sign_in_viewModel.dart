@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:food_delivery_front_end/Features/controller/auth_controller.dart';
-import 'package:food_delivery_front_end/Features/view/forgote_passowrd_view_page.dart';
-import 'package:food_delivery_front_end/Features/view/sign_up_viewPage.dart';
+import 'package:food_delivery_front_end/Features/auth/controller/auth_controller.dart';
+import 'package:food_delivery_front_end/Features/auth/view/forgote_passowrd_view_page.dart';
+import 'package:food_delivery_front_end/Features/auth/view/sign_up_viewPage.dart';
 import 'package:get/get.dart';
 
 class SignInViewmodel {

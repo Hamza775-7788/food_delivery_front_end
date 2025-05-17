@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_front_end/Features/viewModel/signUp_view_model.dart';
+import 'package:food_delivery_front_end/Features/auth/viewModel/signUp_view_model.dart';
 import 'package:food_delivery_front_end/core/shared/my_button.dart';
 import 'package:food_delivery_front_end/core/shared/text_field_widget.dart';
 import 'package:food_delivery_front_end/core/theme/text_styles.dart';

@@ -1,7 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:food_delivery_front_end/Features/home_view.dart';
-import 'package:food_delivery_front_end/Features/repository/auth_repository.dart';
-import 'package:food_delivery_front_end/Features/view/emial_verifiyCodeViewPage.dart';
+import 'package:food_delivery_front_end/Features/auth/repository/auth_repository.dart';
+import 'package:food_delivery_front_end/Features/auth/view/emial_verifiyCodeViewPage.dart';
 import 'package:food_delivery_front_end/core/erorrs/handle_message.dart';
 import 'package:food_delivery_front_end/core/shared/dialogs.dart';
 import 'package:get/get.dart';
@@ -156,7 +155,7 @@ class AuthControllerImpl extends AuthController {
   Future<void> getData() async {
     final requset = await _authRepositoryImpl.getUserData();
     requset.fold((failure) {}, (e) {
-      Get.to(() => HomeView());
+      Get.offAll(() => HomeView());
     });
   }
 }

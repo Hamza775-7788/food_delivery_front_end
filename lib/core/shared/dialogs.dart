@@ -33,3 +33,14 @@ class LodingDialog extends StatelessWidget {
 lodingDialog() {
   Get.dialog(barrierDismissible: false, LodingDialog());
 }
+
+class ErrorDialog extends StatelessWidget {
+  final String message;
+
+  const ErrorDialog({required this.message, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(child: Container(child: Column(children: [Text(message)])));
+  }
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_front_end/Features/controller/auth_controller.dart';
+import 'package:food_delivery_front_end/Features/auth/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
 class SignupViewModel {
