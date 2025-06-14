@@ -95,11 +95,9 @@ class AuthRepositoryImpl extends AuthRepository {
     if (await _networkInfo.isConnected) {
       final body = {"email": email, "password": passowrd};
 
-      final response = await _getConnect.post(
-        "$rootApi/signIn",
-        jsonEncode(body),
-        headers: headersList,
-      );
+      final response = await _getConnect
+          .post("$rootApi/signIn", jsonEncode(body), headers: headersList)
+          .timeout(Duration(seconds: 5));
 
       if (response.statusCode == 200) {
         final jsonData = response.body;
@@ -204,7 +202,9 @@ class AuthRepositoryImpl extends AuthRepository {
       final String token = await _localDataSource.getToken();
       var headers = headersList;
       headers['Authorization'] = 'Bearer $token';
-      final response = await _getConnect.get("$rootApi/user", headers: headers);
+      final response = await _getConnect
+          .get("$rootApi/user", headers: headers)
+          .timeout(Duration(seconds: 20));
       if (response.statusCode == 200) {
         return Right(unit);
       } else if (response.statusCode == 401) {

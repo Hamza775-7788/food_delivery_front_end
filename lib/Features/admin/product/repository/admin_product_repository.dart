@@ -88,7 +88,7 @@ class AdminProductRepositoryImpl implements AdminProductRepository {
 
           return Right(
             listData
-                .map<ProductModel>((e) => ProductModel.fromjson(e))
+                .map<ProductModel>((e) => ProductModel.fromJson(e))
                 .toList(),
           );
         } else {
