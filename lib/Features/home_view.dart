@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_front_end/Features/admin/category/view/categoryView.dart';
+import 'package:food_delivery_front_end/Features/admin/views/view/admin_view_page.dart';
 import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
@@ -17,7 +17,7 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             onPressed: () {
-              Get.to(() => AdminCategoryViewPage());
+              Get.to(() => AdminViewPage());
             },
             icon: Icon(
               Icons.admin_panel_settings,

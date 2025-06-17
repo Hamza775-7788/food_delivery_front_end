@@ -1,3 +1,4 @@
+import 'package:food_delivery_front_end/Features/auth/view/sign_in_view.dart';
 import 'package:food_delivery_front_end/Features/home_view.dart';
 import 'package:food_delivery_front_end/Features/auth/repository/auth_repository.dart';
 import 'package:food_delivery_front_end/Features/auth/view/emial_verifiyCodeViewPage.dart';
@@ -16,6 +17,7 @@ abstract class AuthController extends GetxController {
   Future<void> verifiyCode({required String email, required String code});
   Future<void> restPassowrd({required String email, required String passowrd});
   Future<void> getData();
+  Future<void> splashScreen();
 }
 
 class AuthControllerImpl extends AuthController {
@@ -111,6 +113,7 @@ class AuthControllerImpl extends AuthController {
     Get.back();
     request.fold(
       (failure) {
+        print("$failure");
         handleErorr(failure);
       },
       (_) {
@@ -146,16 +149,21 @@ class AuthControllerImpl extends AuthController {
   }
 
   @override
-  void onInit() {
-    getData();
-    super.onInit();
+  Future<void> getData() async {
+    final requset = await _authRepositoryImpl.getUserData();
+    requset.fold((failure) {}, (e) {});
   }
 
   @override
-  Future<void> getData() async {
+  Future<void> splashScreen() async {
     final requset = await _authRepositoryImpl.getUserData();
-    requset.fold((failure) {}, (e) {
-      Get.offAll(() => HomeView());
-    });
+    requset.fold(
+      (failure) {
+        Get.offAll(() => SignInView());
+      },
+      (e) {
+        Get.offAll(() => HomeView());
+      },
+    );
   }
 }

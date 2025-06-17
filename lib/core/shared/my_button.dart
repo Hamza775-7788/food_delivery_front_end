@@ -5,8 +5,12 @@ import 'package:get/get.dart';
 class MyGenralButton extends StatelessWidget {
   final String name;
   final Function() onPressed;
+  final Color? backgroundColor;
+  final Color? textColor;
   const MyGenralButton({
     super.key,
+    this.backgroundColor,
+    this.textColor,
     required this.onPressed,
     required this.name,
   });
@@ -20,11 +24,11 @@ class MyGenralButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          color: Get.theme.colorScheme.primary,
+          color: backgroundColor ?? Get.theme.colorScheme.primary,
         ),
         child: Text(
           name,
-          style: AppStyles.normalStyleTitle(color: Colors.white),
+          style: AppStyles.normalStyleTitle(color: textColor ?? Colors.white),
         ),
       ),
     );

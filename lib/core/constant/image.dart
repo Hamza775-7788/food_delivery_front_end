@@ -10,4 +10,7 @@ class AppIcons {
   static String googleIcon = "$_icon/google_icon.png";
   static String fBookIcon = "$_icon/f_book_icon.png";
   static String applIcon = "$_icon/appl_icon.png";
+  static String erorrIcon = "$_icon/erorr_icon.png";
+  static String successIcon = "$_icon/success_icon.png";
+  static String worningIcon = "$_icon/woring_icon.png";
 }

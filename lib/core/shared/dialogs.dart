@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_front_end/core/constant/image.dart';
+import 'package:food_delivery_front_end/core/shared/my_button.dart';
+import 'package:food_delivery_front_end/core/theme/text_styles.dart';
 import 'package:get/get.dart';
 
 class LodingDialog extends StatelessWidget {
@@ -41,6 +44,33 @@ class ErrorDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(child: Container(child: Column(children: [Text(message)])));
+    return Dialog(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Get.theme.colorScheme.surface,
+        ),
+        padding: EdgeInsets.all(15),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("حطاء في العملية", style: AppStyles.normalStyleTitle()),
+            const SizedBox(height: 16),
+            Image.asset(AppIcons.erorrIcon, height: 50),
+            const SizedBox(height: 16),
+
+            Text(message, style: AppStyles.normalStyleTitle()),
+            const SizedBox(height: 16),
+
+            MyGenralButton(
+              onPressed: () {
+                Get.back();
+              },
+              name: "اغلاق",
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
