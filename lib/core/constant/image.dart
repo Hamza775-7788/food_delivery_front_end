@@ -4,6 +4,7 @@ const String _icon = "$_asset/Icons";
 
 class AppImage {
   static String onBordingImage = "$_image/onBordingView.png";
+  static String homeImage = "$_image/home_image.png";
 }
 
 class AppIcons {
