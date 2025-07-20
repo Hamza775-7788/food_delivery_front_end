@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_front_end/core/model/product_model.dart';
 import 'package:food_delivery_front_end/core/shared/my_button.dart';
 import 'package:food_delivery_front_end/core/theme/text_styles.dart';
+import 'package:food_delivery_front_end/main.dart';
 import 'package:get/get.dart';
 
 class ProductViewPage extends StatefulWidget {
@@ -13,6 +14,8 @@ class ProductViewPage extends StatefulWidget {
 }
 
 class _ProductViewPageState extends State<ProductViewPage> {
+  int quntity = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,18 +147,38 @@ class _ProductViewPageState extends State<ProductViewPage> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (quntity == 1) {
+                        } else {
+                          quntity--;
+                          setState(() {});
+                        }
+                      },
                       icon: Icon(Icons.remove, size: 35),
                     ),
                     SizedBox(width: 16),
-                    Text("4", style: AppStyles.normalStyleTitleBold()),
+                    Text(
+                      quntity.toString(),
+                      style: AppStyles.normalStyleTitleBold(),
+                    ),
                     SizedBox(width: 16),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        quntity++;
+                        setState(() {});
+                      },
                       icon: Icon(Icons.add, size: 35),
                     ),
                     Spacer(),
-                    MyGenralButton(onPressed: () {}, name: "Add to Cart"),
+                    MyGenralButton(
+                      onPressed: () {
+                        cartControllerImpl.addToCart(
+                          product: widget.product,
+                          quntity: quntity,
+                        );
+                      },
+                      name: "Add to Cart",
+                    ),
                   ],
                 ),
               ),

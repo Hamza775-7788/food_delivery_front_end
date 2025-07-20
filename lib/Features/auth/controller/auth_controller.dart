@@ -1,6 +1,5 @@
 import 'package:food_delivery_front_end/Features/Main/MainViewPage.dart';
 import 'package:food_delivery_front_end/Features/auth/view/sign_in_view.dart';
-import 'package:food_delivery_front_end/Features/home/view/home_view.dart';
 import 'package:food_delivery_front_end/Features/auth/repository/auth_repository.dart';
 import 'package:food_delivery_front_end/Features/auth/view/emial_verifiyCodeViewPage.dart';
 import 'package:food_delivery_front_end/core/erorrs/handle_message.dart';
@@ -89,7 +88,7 @@ class AuthControllerImpl extends AuthController {
           handleErorr(failure);
         },
         (_) {
-          Get.offAll(() => HomeView());
+          Get.offAll(() => Mainviewpage());
           handleSuccess();
         },
       );
@@ -118,7 +117,7 @@ class AuthControllerImpl extends AuthController {
         handleErorr(failure);
       },
       (_) {
-        Get.to(() => HomeView());
+        Get.offAll(() => Mainviewpage());
         handleSuccess();
       },
     );
