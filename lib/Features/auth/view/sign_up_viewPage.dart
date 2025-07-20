@@ -57,7 +57,7 @@ class _SignUpViewPageState extends State<SignUpViewPage> {
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
               SliverToBoxAdapter(
                 child: MyTextFieldWithLable(
-                  isPassowrd: true,
+                  // isPassowrd: true,
                   controller: viewModel.passwordController,
                   hint: viewModel.passwordHint,
                   lable: viewModel.passwordLable,

@@ -34,3 +34,23 @@ class MyGenralButton extends StatelessWidget {
     );
   }
 }
+
+class AppBarButtonWithIcon extends StatelessWidget {
+  const AppBarButtonWithIcon({required this.icon, this.onTp, super.key});
+  final Widget icon;
+  final Function()? onTp;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTp,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.white),
+        ),
+        child: icon,
+      ),
+    );
+  }
+}

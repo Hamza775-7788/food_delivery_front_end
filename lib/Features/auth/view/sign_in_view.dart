@@ -57,15 +57,15 @@ class _SignInViewState extends State<SignInView> {
                 ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
               SliverToBoxAdapter(
                 child: MyTextFieldWithLable(
-                  isPassowrd: true,
+                  // isPassowrd: true,
                   controller: viewmodel.passwordController,
                   hint: viewmodel.passwordHint,
                   lable: viewmodel.passwordLable,
                 ),
               ),
-
               const SliverToBoxAdapter(child: SizedBox(height: 10)),
 
               SliverToBoxAdapter(

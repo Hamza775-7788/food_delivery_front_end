@@ -1,3 +1,5 @@
+import 'package:food_delivery_front_end/core/Server/root_link.dart';
+
 class ProductModel {
   int id;
   String createdAt;
@@ -61,5 +63,9 @@ class ProductModel {
       "category": category,
       "category_image": categoryImage,
     };
+  }
+
+  String get fullImageUrl {
+    return "$storage/$image";
   }
 }

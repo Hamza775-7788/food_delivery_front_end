@@ -1,11 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_front_end/Features/home/controller/home_controller.dart';
 import 'package:food_delivery_front_end/Features/home/viewmodel/home_viewModel.dart';
-import 'package:food_delivery_front_end/core/Server/root_link.dart';
+import 'package:food_delivery_front_end/Features/home/widgets/category_list_item.dart';
+import 'package:food_delivery_front_end/Features/home/widgets/custom_sliver_app_bar_widgets.dart'
+    show CustomSliverAppBar;
+import 'package:food_delivery_front_end/Features/home/widgets/product_home_widget.dart';
 
 import 'package:food_delivery_front_end/core/constant/image.dart';
-import 'package:food_delivery_front_end/core/model/categoryModel.dart';
+import 'package:food_delivery_front_end/core/shared/my_button.dart';
+
+import 'package:food_delivery_front_end/core/theme/text_styles.dart';
 
 import 'package:get/get.dart';
 
@@ -27,17 +31,121 @@ class _HomeViewState extends State<HomeView> {
           return CustomScrollView(
             slivers: [
               CustomSliverAppBar(
-                child: Image.asset(AppImage.homeImage, fit: BoxFit.cover),
-              ),
-              SliverToBoxAdapter(child: Text(viewmodel.categoryLable)),
-              SliverToBoxAdapter(
-                child: CategoryListItem(
-                  categories: viewmodel.categories,
-                  onTap: (index) {
-                    viewmodel.getProudct(index);
-                    setState(() {});
-                  },
+                child: Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Image.asset(AppImage.homeImage, fit: BoxFit.fill),
+                    ),
+
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 50),
+                            Row(
+                              children: [
+                                Container(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Your Location",
+                                        style: AppStyles.normalStyleTitleBold(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                            color: Colors.white,
+                                          ),
+                                          Text(
+                                            "New York City",
+                                            style:
+                                                AppStyles.normalStyleTitleBold(
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Spacer(),
+                                AppBarButtonWithIcon(
+                                  icon: Icon(
+                                    Icons.search,
+                                    size: 35,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(width: 16),
+                                AppBarButtonWithIcon(
+                                  icon: Icon(
+                                    Icons.notifications_none_outlined,
+                                    size: 35,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              viewmodel.subtitle,
+                              style: AppStyles.normalStyleTitleBold(
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    viewmodel.categoryLable,
+                    style: AppStyles.normalStyleTitleBold(),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: CategoryListItem(
+                    selectedIndex: viewmodel.selectCategory,
+                    categories: viewmodel.categories,
+                    onTap: (index) {
+                      viewmodel.getProudct(index);
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverGrid.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 1 / 1.2,
+                ),
+                itemCount: viewmodel.products.length,
+                itemBuilder: (context, index) {
+                  final product = viewmodel.products[index];
+                  return ProductHomeWidget(onTap: () {}, product: product);
+                },
               ),
             ],
           );
@@ -47,69 +155,3 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-class CategoryListItem extends StatelessWidget {
-  const CategoryListItem({
-    required this.categories,
-    required this.onTap,
-    super.key,
-  });
-  final Function(int index) onTap;
-  final List<CategoryModel> categories;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      child: ListView.builder(
-        itemCount: categories.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final category = categories[index];
-          return GestureDetector(
-            child: Container(
-              margin: EdgeInsets.all(5),
-
-              width: 80,
-              decoration: BoxDecoration(
-                color: Get.theme.colorScheme.primary,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                children: [
-                  Image.network("$storage/${category.image}", height: 50),
-                  Text(category.name),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class CustomSliverAppBar extends StatelessWidget {
-  const CustomSliverAppBar({super.key, required this.child});
-
-  // العنوان في الحالة المطوية (العلوي)
-  final Widget child; // المحتوى الأساسي
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      title: Text("Food Delvry"),
-      centerTitle: true, // يظهر عند التمرير لأعلى
-      expandedHeight: 300,
-      floating: false,
-      pinned: true,
-      foregroundColor: Colors.white,
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      flexibleSpace: FlexibleSpaceBar(
-        expandedTitleScale: 1,
-        // يظهر عند التمرير لأسفل
-        background: child,
-        centerTitle: true,
-      ),
-    );
-  }
-}

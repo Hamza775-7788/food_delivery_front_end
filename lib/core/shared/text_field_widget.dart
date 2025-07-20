@@ -24,7 +24,7 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      maxLines: widget.maxLine,
+      maxLines: widget.isPassowrd ? null : widget.maxLine,
       minLines: 1,
       obscureText: widget.isPassowrd ? showPassword : false,
       controller: widget.controller,
