@@ -33,7 +33,7 @@ class AppStyles {
   static TextStyle priceStyle({Color? color}) {
     return TextStyle(
       color: color ?? Get.theme.colorScheme.primary,
-      fontSize: 20,
+      fontSize: 19,
       fontWeight: FontWeight.bold,
     );
   }
